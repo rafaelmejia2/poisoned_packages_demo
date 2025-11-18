@@ -1,0 +1,30 @@
+{
+  "name": "poisoned_packages_demo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This is a simple web application used to simulate downloading an unknown dependency through npm.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node seed_users.js",
+    "wait:db": "node scripts/waitForDb.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelmejia2/poisoned_packages_demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaelmejia2/poisoned_packages_demo/issues"
+  },
+  "homepage": "https://github.com/rafaelmejia2/poisoned_packages_demo#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mysql2": "^3.15.3"
+  }
+}
