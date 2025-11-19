@@ -27,8 +27,11 @@ for (const u of users) {
   const hash = await bcrypt.hash(u.password, 12);
   await seedPool.execute(
     `INSERT INTO users (username, password_hash, role)
-     VALUES (?, ?, ?)
-     ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), role = VALUES(role)`,
+    VALUES (?, ?, ?)
+    AS new
+    ON DUPLICATE KEY UPDATE
+      password_hash = new.password_hash,
+      role = new.role`,
     [u.username, hash, u.role]
   );
   console.log(`Seeded ${u.username}`);

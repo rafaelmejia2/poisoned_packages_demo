@@ -4,6 +4,7 @@ WORKDIR /app
 
 # Install main deps exactly as defined by your lockfile
 COPY package.json package-lock.json ./
+ARG CACHE_BUSTER
 RUN npm ci
 
 # Copy the rest of the app last

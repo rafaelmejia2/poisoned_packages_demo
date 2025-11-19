@@ -5,7 +5,6 @@ import { fileURLToPath } from "url";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import fs from "fs";
-import { installSnoop } from "@rmejia32/malicious_package_demo"; // import the malicious package
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,8 +28,32 @@ app.use(
   })
 );
 
-// use the malicious package to snoop on sessions
-app.use(installSnoop(session));
+let snoopMw = (req, res, next) => next(); // no-op until enabled
+app.use((req, res, next) => snoopMw(req, res, next));
+
+app.post("/demo/enable-snoop", async (req, res) => {
+  try {
+    const mod = await import("@rmejia32/malicious_package_demo");
+    if (typeof mod.installSnoop === "function") {
+      snoopMw = mod.installSnoop(session);
+      console.log("[demo] malicious snooper ENABLED");
+      return res.json({ ok: true, message: "Snooper enabled" });
+    }
+    return res
+      .status(500)
+      .json({ ok: false, error: "installSnoop() not found" });
+  } catch (e) {
+    console.warn("[demo] enable failed:", e.message);
+    return res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+// Optional: disable again during the same process
+app.post("/demo/disable-snoop", (req, res) => {
+  snoopMw = (req, res, next) => next();
+  console.log("[demo] malicious snooper DISABLED");
+  res.json({ ok: true, message: "Snooper disabled" });
+});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "layout.html"));

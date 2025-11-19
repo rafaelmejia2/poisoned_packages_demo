@@ -11,9 +11,19 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/00-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -prootpass --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # this arg changes every run, invalidating the cache intentionally
+        CACHE_BUSTER: ${CACHE_BUSTER:-0}
     ports:
       - "3000:3000"
     environment:
@@ -24,7 +34,10 @@ services:
       DB_PASS: password
       DB_NAME: poisoned_site
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "node ./scripts/seed_users.js && npm start"
 
 volumes:
   db_data:
