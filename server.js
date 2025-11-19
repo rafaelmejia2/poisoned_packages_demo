@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import fs from "fs";
-import { installSnoop } from "malicious_package";
+import { installSnoop } from "@rmejia/malicious-package-demo";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
