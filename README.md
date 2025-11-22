@@ -10,7 +10,7 @@ This is a simple web application used to simulate downloading an malicious depen
 
 ## Quick Start
 
-1. Clone repo
+1. `git clone https://github.com/rafaelmejia2/poisoned_packages_demo`
 2. cd poisoned_packages_demo
 3. Run the stack with `./build.sh` on **bash** or `./build.ps1` on **Windows Powershell**.
 4. Install the malicious package with `docker compose exec app npm install @rmejia32/malicious_package_demo`.
