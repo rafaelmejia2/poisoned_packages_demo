@@ -37,7 +37,10 @@ services:
       db:
         condition: service_healthy
     command: >
-      sh -c "node ./scripts/seed_users.js && npm start"
+      sh -c "node scripts/waitForDb.mjs &&
+        node scripts/seed_users.js &&
+        node server.js &&
+        npm start"
 
 volumes:
   db_data:

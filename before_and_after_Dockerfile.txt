@@ -1,0 +1,53 @@
+BEFORE
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install main deps exactly as defined by your lockfile
+COPY package.json package-lock.json ./
+ARG CACHE_BUSTER
+RUN npm ci --omit=dev --ignore-scripts
+RUN npm audit signatures
+
+# Copy the rest of the app last
+COPY . .
+
+EXPOSE 3000
+CMD ["npm", "start"]
+
+
+AFTER
+# ---------- Build stage ----------
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Install exactly what’s in the lockfile
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts
+
+# Copy source code into the build stage
+COPY . .
+
+# ---------- Runtime stage ----------
+FROM node:20-alpine AS runtime
+
+WORKDIR /app
+
+# Copy ONLY the built app and node_modules
+COPY --from=build /app /app
+
+# Remove npm and other build tools to prevent runtime installs
+RUN rm -rf /usr/local/lib/node_modules/npm \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx
+
+# Security best practices
+# Adds group "app" as a system account (-S) and adds to group app in an isolated group.
+# Switches over to app user instead of root to lower privileges.
+# NODE_ENV switches over to production only so only production safe behavior and dependencies are active.
+RUN addgroup -S app && adduser -S app -G app
+USER app
+ENV NODE_ENV=production
+
+EXPOSE 3000
+CMD ["node", "server.js"]

@@ -12,7 +12,7 @@ This is a simple web application used to simulate downloading an malicious depen
 
 1. Clone repo
 2. cd poisoned_packages_demo
-3. Run the stack with `docker compose up -d`
+3. Run the stack with `./build.sh` on **bash** or `./build.ps1` on **Windows Powershell**.
 4. Install the malicious package with `docker compose exec app npm install @rmejia32/malicious_package_demo`.
 5. Check to see if snooper is enabled with `curl -X POST http://localhost:3000/demo/enable-snoop`.
 6. Wait until docker desktop has log of localhost:3000 being started.
