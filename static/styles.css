@@ -1,0 +1,120 @@
+/* body {
+    background-color: #eee;
+    color: #111;
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    padding: 20px;
+    max-width: 600px;
+    margin: 10vh auto;
+    line-height: 1.5;
+} */
+
+* {
+    background-color: #fff;
+}
+
+header {
+    background-color: #fff;
+    color: #111;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0 15px;
+    border-bottom: 1px solid #bababa;
+}
+
+.top-nav ul li{
+    list-style-type: none;
+    display: inline-block;
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+
+.top-nav ul li a {
+    text-decoration: none;
+    color: #111;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+.login-container {
+    align-items: center;
+    font-family: monospace;
+}
+
+.login-container form {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-container form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.login-container form input[name="username"],
+.login-container form input[type="password"] {
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.login-container form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #111;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.admin-container {
+    font-family: monospace;
+}
+
+.whoami-container {
+    font-family: monospace;
+}
+
+.whoami-container form {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.whoami-container button {
+    padding: 10px;
+    background-color: #111;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.whoami-container a {
+    color: #4a97fc;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: monospace;
+}

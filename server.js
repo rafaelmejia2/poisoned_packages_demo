@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
+app.use(express.static('static'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -129,7 +130,13 @@ function requireRole(role) {
 }
 
 app.get("/admin", requireAuth, requireRole("admin"), (req, res) => {
-  res.send(`<h2>Admin</h2><p>Welcome, ${req.session.user.username}.</p>`);
+  const filePath = path.join(__dirname, "views", "admin.html");
+  let html = fs.readFileSync(filePath, "utf8");
+
+  html = html
+    .replace("${req.session.user.username}", req.session.user.username)
+
+  res.send(html);
 });
 
 app.get("/db-test", async (req, res) => {
